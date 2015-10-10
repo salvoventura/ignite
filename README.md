@@ -71,14 +71,21 @@ python ~ignite/ignite/manage.py makemigrations
 python ~ignite/ignite/manage.py migrate
 ```
 
-4.Edit following line ~ignite/ignite/dist/scripts/utils/settings.*.js to ignite server ip and port (8000).
+4.Edit following lines ~ignite/ignite/dist/scripts/utils/settings.*.js
 ```
 "baseURL" : "http://localhost:9010"
 ```
 to
 ```
 "baseURL" : "http://<ignite_vm_ip>:<port>"
-
+```
+and the following line:
+```
+"baseURL": "http://127.0.0.1:8000"
+```
+to
+```
+"baseURL" : "http://<ignite_vm_ip>:<port>"
 ```
 
 5.Run server
@@ -88,7 +95,7 @@ python manage.py runserver <ip:port>
 
 6.Run following command to create user on server
 ```
-curl -X POST -i -H "Content-type: application/json" http://<ignite_vm_ip>:<port>/auth/register/  -d '{"username”:”admin”, "password”:”admin”, "email":"username@xyz.com"}'
+curl -X POST -i -H "Content-type: application/json" http://<ignite_vm_ip>:<port>/auth/register/  -d '{"username":"admin", "password":"admin", email":"username@xyz.com"}'
 ```
 
 7.Run UI on web browser
