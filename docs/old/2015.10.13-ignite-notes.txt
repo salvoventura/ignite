@@ -11,7 +11,7 @@ pip install python-dateutil
 
 mkdir -p /opt/cisco
 cd /opt/cisco
-wget https://github.com/datacenter/ignite/archive/master.zip
+wget https://github.com/salvoventura/ignite/archive/master.zip
 unzip master.zip
 mv ignite-master/ ignite/
 cd /opt/cisco/ignite
