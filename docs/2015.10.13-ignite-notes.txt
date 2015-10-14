@@ -1,0 +1,148 @@
+2015.10.13 - 18.56
+==================
+
+On FRESH UBUNTU 15:
+
+apt-get install unzip
+apt-get install python-pip
+apt-get install apache2
+apt-get install sqlite3
+pip install python-dateutil
+
+mkdir -p /opt/cisco
+cd /opt/cisco
+wget https://github.com/datacenter/ignite/archive/master.zip
+unzip master.zip
+mv ignite-master/ ignite/
+cd /opt/cisco/ignite
+
+pip install -r requirement.txt
+python manage.py makemigrations
+python manage.py migrate
+
+mkdir -p /opt/cisco/ignite/ignite/apache
+touch /opt/cisco/ignite/ignite/apache/__init__.py
+touch /opt/cisco/ignite/ignite.log
+
+apt-get install libapache2-mod-wsgi
+cp APACHE_IGNITE_CONF /etc/apache2/sites-available/ignite.conf
+cp OVERRIDE_PY /opt/cisco/ignite/ignite/apache/override.py
+cp WSGI_PY  /opt/cisco/ignite/ignite/apache/wsgi.py
+chown -R www-data:www-data /opt/cisco/ignite
+
+#
+# SOMEWHERE HERE THE configure.sh needs to be run
+#
+
+a2dissite 000-default
+a2ensite ignite
+service apache2 restart
+
+
+
+
+
+Edits on files to be done on repo
+=================================
+ - Edit script /opt/cisco/ignite/configure.sh
+   This way it will use the configure IP address on eth0
+
+   ignite_ip=`ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
+   ignite_port=80
+
+
+ - Edit file:
+	/opt/cisco/ignite/ignite/prod.py
+
+	1. From: 'ENGINE': 'django.db.backends.postgresql_psycopg2'
+	   To:   'ENGINE': 'django.db.backends.sqlite3'
+
+	2. From: 'NAME': 'ignitedb'
+	   To:   'NAME': '/opt/cisco/ignite/ignite.db'
+
+	3. Comment the following lines:
+        	'USER': 'postgres',
+        	'PASSWORD': 'password',
+        	'HOST': 'localhost',
+        	'PORT': '',
+
+    4. From: 'filename': 'ignite.log',
+       To:   'filename': '/opt/cisco/ignite/ignite.log',
+
+    5. From: TIMEZONE = 'Asia/Kolkata'
+       To:   TIME_ZONE = 'US/Pacific'
+
+
+ - Edit file:
+	/opt/cisco/ignite/requirement.txt
+
+	1. Comment line:
+	   #psycopg2==2.6
+
+	2. Comment line:
+	   #pythondateutil==2.4.2
+
+
+ - Edit file:
+    /opt/cisco/ignite/ignite/urls.py
+
+	1. Comment out:
+       # url(r'^ui/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': prod.UI_ROOT, }),
+
+
+
+FILES
+=====
+APACHE_IGNITE_CONF
+*-*-*-*-*-*-*-*-*-*
+
+<VirtualHost *:80>
+    #ServerName www.example.com
+    #ServerAlias example.com
+    #ServerAdmin webmaster@example.com
+
+    DocumentRoot /var/www/html
+    <Directory /var/www/html>
+    Order allow,deny
+    Allow from all
+    </Directory>
+
+    Alias /favicon.ico /opt/cisco/ignite/dist/favicon.ico
+    Alias /robots.txt /opt/cisco/ignite/dist/robots.txt
+
+    RedirectMatch "^/$" "/ui/"
+    Alias /ui/ /opt/cisco/ignite/dist/
+    <Directory /opt/cisco/ignite/dist>
+    Require all granted
+    </Directory>
+
+    WSGIPassAuthorization On
+    WSGIScriptAlias / /opt/cisco/ignite/ignite/apache/wsgi.py
+    <Directory /opt/cisco/ignite/ignite/apache>
+      <Files wsgi.py>
+      Require all granted
+      </Files>
+    </Directory>
+    LogLevel info
+</VirtualHost>
+
+
+OVERRIDE_PY
+*-*-*-*-*-*-*-*-*-*
+
+# override.py
+import sys
+sys.path.insert(0, '/opt/cisco/ignite')
+from ignite.prod import *
+DEBUG = True
+
+
+WSGI_PY
+*-*-*-*-*-*-*-*-*-*
+
+import os, sys
+sys.path.append('/opt/cisco/ignite')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'ignite.apache.override'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()

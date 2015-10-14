@@ -2,8 +2,8 @@
 
 
 #------------Configureable parameters-------------
-ignite_ip=127.0.0.1
-ignite_port=8000
+ignite_ip=`ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
+ignite_port=80
 
 vmusername=ignite
 vmpassword=ignite

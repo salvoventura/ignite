@@ -64,41 +64,31 @@ MIDDLEWARE_CLASSES = (
 # UI code
 UI_ROOT = os.getcwd()+ '/dist'
 UI_URL = 'ui/'
-
 ROOT_URLCONF = 'ignite.urls'
-
 WSGI_APPLICATION = 'ignite.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'ignitedb',                      # Or path to database file if using sqlite3.
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '/opt/cisco/ignite/ignite.db',  # Or path to database file if using sqlite3.
+        #'USER': 'postgres',
+        #'PASSWORD': 'password',
+        #'HOST': 'localhost',                   # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
+        #'PORT': '',                            # Set to empty string for default.
     }
 }
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'Asia/Kolkata'
-
+TIME_ZONE = 'US/Pacific'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
@@ -126,7 +116,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'ignite.log',
+            'filename': '/opt/cisco/ignite/ignite.log',
             'formatter': 'verbose'
         },
     },
