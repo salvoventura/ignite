@@ -1,4 +1,4 @@
-![Ignite](https://github.com/datacenter/ignite/blob/master/dist/images/color-logo.png)
+![Ignite](https://github.com/salvoventura/ignite/blob/master/dist/images/color-logo.png)
 
 # Description
 
@@ -10,99 +10,49 @@ Ignite provides bootstrapping with the following capabilities:
 * Image and configuration store for POAP
 * POAP request handler
 
-![Ignite Screenshot](https://github.com/datacenter/ignite/blob/master/dist/images/ignite-screenshot.png)
+
+This fork introduces changes to further simplify the deployment. In particular:
+* support sqlite
+* installer for Ubuntu (tested Ubuntu 15, server, x64)
 
 # Getting Started
+=================
 
-### Option 1: Download OVA from link below:
-https://cisco.box.com/s/2ctbs4ebx7oycowusf9vxznvhcworx2k
+## Option 1
+1. Install Ubuntu 15 server:
+   * only include OpenSSH as optional package
 
-Username/password: ignite/ignite
+2. Configure networking on the Ubuntu machine:
+   * IP address, routing, proxy if needed...
+   * make sure official ubuntu repositories are reachable by testing
+   ``` sudo apt-get update
+   ```
+3. Download the installer bundle on the Ubuntu machine from here:
+   [ignite-bundle.sh](../blob/master/package/ignite-bundle.sh)
 
-Follow steps 4-7 below (skip step 6)
+   ``` sudo wget https://github.com/salvoventura/ignite/blob/master/package/ignite-bundle.sh
+   ```
 
-	a. Deploy OVA
-	b. Login with ignite/ignite
-	c. Change directory to ~/ignite/ignite (cd ~/ignite/ignite)
-	d. Change to sudo (sudo su)
-	e. Edit configure.sh to edit parameter values of following parameters
-	   	ignite_ip :  IP address on which to run the server
-	    ignite_port: port on which to run the server
-	    vmusername: username for the server
-	    vmpassword: password for the server
-	f. Run configure.sh (sh configure.sh)
-	g. Run ignite server (python manage.py runserver ip:port ) where IP is the address provided in ignite_ip and port is value provided in ignite_port.
-	h. To launch UI use http://<ipaddress>:<port>/ui/index.html
-	i. Use New User registration link in the UI to create a new user credential. Login to the page using this credential.
+4. Run the bundle file:
+   ``` sudo bash ignite-bundle.sh
+   ```
 
-Setup users as mentioned in step-6 below.
+### Notes
+* Transfering the ignite-bundle.sh via WinScp is known to possibly corrupt
+  it, even if transfer mode is set to binary. It is best to follow the wget
+  approach from within the Ubuntu machine.
 
-### Option 2: Create a new Ignite VM/Server with code from git
+* If that is not feasable, then transfer the whole zip file onto the server,
+  extract it locally and run the bundle file.
 
-1.Install postgresql
-```
-apt-get install postgresql-9.3 postgresql-common
-```
 
-2.Set up database
-```
-psql  –U postgres
-create database  DATABASE_NAME;
-\q
-```
+## Option 2
+   TBD: OVA download is work-in-progress
 
-Edit  following section in ~/ignite/ignite/prod.py
-```
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': ‘DATABASE_NAME’,                  #Name of database created
-        'USER': 'postgres',                       #Database User
-        'PASSWORD': 'PASSWORD',                   #password for Database user
-        'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
-```
-
-3.Create tables in database
-```
-python ~ignite/ignite/manage.py makemigrations
-python ~ignite/ignite/manage.py migrate
-```
-
-4.Edit following lines ~ignite/ignite/dist/scripts/utils/settings.*.js
-```
-"baseURL" : "http://localhost:9010"
-```
-to
-```
-"baseURL" : "http://<ignite_vm_ip>:<port>"
-```
-and the following line:
-```
-"baseURL": "http://127.0.0.1:8000"
-```
-to
-```
-"baseURL" : "http://<ignite_vm_ip>:<port>"
-```
-
-5.Run server
-```
-python manage.py runserver <ip:port>
-```
-
-6.Run following command to create user on server
-```
-curl -X POST -i -H "Content-type: application/json" http://<ignite_vm_ip>:<port>/auth/register/  -d '{"username":"admin", "password":"admin", email":"username@xyz.com"}'
-```
-
-7.Run UI on web browser
-  To launch UI use http://<ipaddress>:<port>/ui/index.html
-  Use New User registration link in the UI to create a new user credential. Login to the page using this credential.
 
 # License
+Forked from Cisco Datacenter, carries the same APACHE license.
+
 
 Copyright 2015 Cisco Systems, Inc.
 
