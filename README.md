@@ -16,8 +16,6 @@ This fork introduces changes to further simplify the deployment. In particular:
 * installer for Ubuntu (tested Ubuntu 15, server, x64)
 
 # Getting Started
-=================
-
 ## Option 1
 1. Install Ubuntu 15 server:
    * only include OpenSSH as optional package
@@ -25,17 +23,20 @@ This fork introduces changes to further simplify the deployment. In particular:
 2. Configure networking on the Ubuntu machine:
    * IP address, routing, proxy if needed...
    * make sure official ubuntu repositories are reachable by testing
-   ``` sudo apt-get update
-   ```
+```
+   sudo apt-get update
+```
 3. Download the installer bundle on the Ubuntu machine from here:
    [ignite-bundle.sh](../blob/master/package/ignite-bundle.sh)
 
-   ``` sudo wget https://github.com/salvoventura/ignite/blob/master/package/ignite-bundle.sh
-   ```
+```
+   sudo wget https://github.com/salvoventura/ignite/blob/master/package/ignite-bundle.sh
+```
 
 4. Run the bundle file:
-   ``` sudo bash ignite-bundle.sh
-   ```
+```
+   sudo bash ignite-bundle.sh
+```
 
 ### Notes
 * Transfering the ignite-bundle.sh via WinScp is known to possibly corrupt
