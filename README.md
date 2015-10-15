@@ -27,12 +27,10 @@ This fork introduces changes to further simplify the deployment. In particular:
    sudo apt-get update
 ```
 3. Download the installer bundle on the Ubuntu machine from here:
-   [ignite-bundle.sh](../blob/master/package/ignite-bundle.sh)
-
+   [ignite-bundle.sh](../master/package/ignite-bundle.sh)
 ```
    sudo wget https://github.com/salvoventura/ignite/blob/master/package/ignite-bundle.sh
 ```
-
 4. Run the bundle file:
 ```
    sudo bash ignite-bundle.sh
