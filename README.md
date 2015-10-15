@@ -1,4 +1,4 @@
-![Ignite](https://github.com/salvoventura/ignite/blob/master/dist/images/color-logo.png)
+![Ignite](https://github.com/salvoventura/ignite/raw/master/dist/images/color-logo.png)
 
 # Description
 
@@ -23,18 +23,18 @@ This fork introduces changes to further simplify the deployment. In particular:
 2. Configure networking on the Ubuntu machine:
    * IP address, routing, proxy if needed...
    * make sure official ubuntu repositories are reachable by testing
-```
+   ```
    sudo apt-get update
-```
-3. Download the installer bundle on the Ubuntu machine from here:
+   ```
+3. Download the installer bundle on the Ubuntu machine from here (raw):
    [ignite-bundle.sh](../master/package/ignite-bundle.sh)
-```
-   sudo wget https://github.com/salvoventura/ignite/blob/master/package/ignite-bundle.sh
-```
+   ```
+   sudo wget https://github.com/salvoventura/ignite/raw/master/package/ignite-bundle.sh
+   ```
 4. Run the bundle file:
-```
+   ```
    sudo bash ignite-bundle.sh
-```
+   ```
 
 ### Notes
 * Transfering the ignite-bundle.sh via WinScp is known to possibly corrupt
