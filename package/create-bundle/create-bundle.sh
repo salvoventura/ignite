@@ -20,14 +20,15 @@ CURDIR=`pwd`
 TMPDIR=`mktemp -d`
 
 # Initial check/update
-#apt-get update
-#apt-get -y install unzip
+apt-get update
+apt-get -y install unzip
 
 # Get the file, unzip, correct the folder name and tar/bzip2 it
 cd ${TMPDIR}
 wget ${IGNITE_ZIP_FILE_URL} -O master.zip
 unzip master.zip
 mv ignite-master/ ignite/
+rm -f ignite/package/ignite-bundle.sh  # delete the old bundle file
 tar cf ignite.tar ignite/
 bzip2 -9 ignite.tar
 
@@ -37,4 +38,3 @@ echo "PAYLOAD:"                 >> ${INSTALLER}
 cat ignite.tar.bz2              >> ${INSTALLER}
 cp ${INSTALLER} ${CURDIR}/.
 rm -rf ${TMPDIR}
-
