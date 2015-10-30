@@ -26,6 +26,7 @@ This fork introduces changes to further simplify the deployment. In particular:
    * make sure official ubuntu repositories are reachable by testing
    ```
    sudo apt-get update
+   sudo apt-get install unzip
    ```
 
 3. Download the zip file on the Ubuntu machine from here:
@@ -35,7 +36,13 @@ This fork introduces changes to further simplify the deployment. In particular:
    sudo wget https://github.com/salvoventura/ignite/archive/master.zip
    ```
 
-4. Run the install.sh as sudo/root:
+4. Unzip the archive:
+
+   ```
+   sudo unzip master.zip
+   ```
+
+5. Run the installer:
 
    ```
    sudo bash install.sh
