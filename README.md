@@ -12,6 +12,7 @@ Ignite provides bootstrapping with the following capabilities:
 
 
 This fork introduces changes to further simplify the deployment. In particular:
+* apache integration
 * support sqlite
 * installer for Ubuntu (tested Ubuntu 15, server, x64)
 
@@ -26,27 +27,19 @@ This fork introduces changes to further simplify the deployment. In particular:
    ```
    sudo apt-get update
    ```
-3. Download the installer bundle on the Ubuntu machine from here (raw):
-   [ignite-bundle.sh](../master/package/ignite-bundle.sh)
+
+3. Download the zip file on the Ubuntu machine from here:
+   [master.zip](https://github.com/salvoventura/ignite/archive/master.zip)
 
    ```
-   sudo wget https://github.com/salvoventura/ignite/raw/master/package/ignite-bundle.sh
+   sudo wget https://github.com/salvoventura/ignite/archive/master.zip
    ```
 
-4. Run the bundle file:
+4. Run the install.sh as sudo/root:
 
    ```
-   sudo bash ignite-bundle.sh
+   sudo bash install.sh
    ```
-
-### Notes
-* Transfering the ignite-bundle.sh via WinScp is known to possibly corrupt
-  it, even if transfer mode is set to binary. It is best to follow the wget
-  approach from within the Ubuntu machine.
-
-* If that is not feasable, then transfer the whole zip file onto the server,
-  extract it locally and run the bundle file.
-
 
 ## Option 2
    TBD: OVA download is work-in-progress
