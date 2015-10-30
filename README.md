@@ -45,6 +45,7 @@ This fork introduces changes to further simplify the deployment. In particular:
 5. Run the installer:
 
    ```
+   cd ignite-master
    sudo bash install.sh
    ```
 
